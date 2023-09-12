@@ -96,7 +96,7 @@ Note: En résumé, en tant que développeurs frontend, nous sommes confrontés �
 
 --
 
-> Seul on va plus vite, ensemble on va plus loin ✨
+> ✨ Seul on va plus vite, ensemble on va plus loin ✨
 
 ---
 
@@ -112,7 +112,7 @@ Note: En résumé, en tant que développeurs frontend, nous sommes confrontés �
 
 --
 
-## Justes colocs ? Bien plus que ça 😏
+## Juste colocs ? Bien plus que ça 😏
 
 -- 
 
@@ -160,45 +160,252 @@ Note: En résumé, en tant que développeurs frontend, nous sommes confrontés �
 
 ---
 
-## Et dans la pratique ?
+Le problème dans tout ça ?
 
-Turborepo
+## C'est leeeeent 🐢 <!-- .element: class="fragment" -->
 
----
+--
 
-## Comment bien structurer son Monorepo
+![Délais importants de build](/assets/local-caching.webp) <!-- .element: width="100%" -->
 
-Lors de la création de notre Monorepo, il est essentiel de définir une structure claire et cohérente. Nous pouvons organiser nos projets en fonction des domaines fonctionnels, des équipes ou des fonctionnalités communes. Une structure bien pensée facilite la navigation et la collaboration entre les développeurs.
+--
 
----
+````
+yarn workspaces run lint
+yarn workspaces run test
+yarn workspaces run build
+````
 
-## Comment gérer les mises à jour et les conflits de code
-
-Avec TurboRepo, nous disposons d'outils puissants pour gérer les mises à jour et les conflits de code. Il est essentiel de définir des processus clairs pour la validation et la fusion des modifications. Nous pouvons également tirer parti des fonctionnalités de TurboRepo pour détecter automatiquement les conflits et les résoudre de manière efficace.
-
----
-
-## Comment optimiser la performance et la collaboration entre les équipes
-
-Pour optimiser la performance de notre Monorepo, nous pouvons mettre en place des mécanismes de mise en cache. TurboRepo nous permet de configurer un cache partagé, ce qui améliore la vitesse de construction et de développement. De plus, nous devons encourager une collaboration étroite entre les équipes pour partager les bonnes pratiques et les connaissances.
+![Tâches exécutées de manière séquentielles](/assets/tasks-queue.webp) <!-- .element: width="100%" -->
 
 ---
 
-## Setup d'un nouvel environnement de développement avec un cache partagé
+## Comment y remédier ?
 
-Lorsqu'un nouveau développeur rejoint notre équipe, nous pouvons configurer un nouvel environnement de développement avec un cache partagé. Cela lui permettra de démarrer rapidement en utilisant les ressources déjà disponibles dans le Monorepo. Nous pouvons également fournir des directives claires sur la manière d'utiliser TurboRepo pour une intégration transparente dans notre flux de travail.
+Exemple avec <!-- .element: class="fragment" -->
+
+![Logo Turborepo](/assets/turborepo.png) <!-- .element: width="40%" class="fragment" -->
+
+--
+
+- Builds incrémentaux
+- Exécution parallèle
+- Partage du cache
+- Pipelines de tâches
+- Génération de packages
+
+![Ça fait beaucoup de features](/assets/features.gif) 
+
+-- 
+
+![Délais importants de build](/assets/local-caching.webp) <!-- .element: width="80%" -->
+
+![Build avec cache](/assets/why-turborepo-solution.webp) <!-- .element: width="80%" -->
+
+--
+
+![Exécution parallèle](/assets/turborepo-parallel.webp)
+
+--
+
+### Comment migrer ?
+
+```text
+web (repo 1)
+├─ package.json
+docs (repo 2)
+├─ package.json
+app (repo 3)
+├─ package.json
+```
+
+```text
+my-monorepo
+├─ apps
+│  ├─ app
+│  │  └─ package.json
+│  ├─ docs
+│  │  └─ package.json
+│  └─ web
+│     └─ package.json
+└─ package.json
+```
+
+--
+
+```diff
+  my-monorepo
+  ├─ apps
+  │  ├─ app
+  │  │  └─ package.json
+  │  ├─ docs
+  │  │  └─ package.json
+  │  └─ web
+  │     └─ package.json
++ ├─ packages
++ │  └─ shared
++ │     └─ package.json
+  └─ package.json
+```
+
+--
+
+
+`/package.json`
+```json
+"scripts": {
+  "build": "turbo build",
+  "dev": "turbo dev --no-cache --continue",
+  "lint": "turbo lint",
+  "clean": "turbo clean && rm -rf node_modules",
+  "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+  "changeset": "changeset",
+  "version-packages": "changeset version",
+  "release": "turbo build --filter=docs^... && changeset publish"
+},
+```
+
+Note: On peut voir ici que les scripts sont très simples. Turbo s'occupe de tout et permet une adoption incrémentale en passant les packages ne définissant pas de script.
+
+--
+
+## Pipeline
+
+```json
+"pipeline": {
+  "build": {
+    // A workspace's `build` task depends on that workspace's
+    // topological dependencies' and devDependencies'
+    // `build` tasks  being completed first. The `^` symbol
+    // indicates an upstream dependency.
+    "dependsOn": ["^build"],
+    "outputs": [".next/**", "!.next/cache/**", ".svelte-kit/**"]
+  },
+  "deploy": {
+      // A workspace's `deploy` task depends on the `build`,
+      // `test`, and `lint` tasks of the same workspace
+      // being completed.
+      "dependsOn": ["build", "test", "lint"]
+  },
+  "test": {
+    // A workspace's `test` task depends on that workspace's
+    // own `build` task being completed first.
+    "dependsOn": ["build"],
+    // A workspace's `test` task should only be rerun when
+    // either a `.tsx` or `.ts` file has changed.
+    "inputs": ["src/**/*.tsx", "src/**/*.ts", "test/**/*.ts", "test/**/*.tsx"]
+  },
+  // A workspace's `lint` task has no dependencies and
+  // can be run whenever.
+  "lint": {},
+  "dev": {
+    "cache": false,
+    "persistent": true
+  }
+}
+```
+
+---
+
+### Je dois faire un breaking change, comment je fais ?
+
+-- 
+
+![It's not a bug, it's a feature](/assets/bug-feature.jpg)
+
+Note: Le fait de devoir gérer tous les breaking changes en même temps peut être un frein à l'adoption de cette solution, cependant 
+
+-- 
+
+### 3 approches possibles
+
+- 😰 Faire des PR énormes
+- 😵 Revenir à une gestion de versions <!-- .element: class="fragment" -->
+- 😎 Utiliser les dépréciations <!-- .element: class="fragment" -->
+
+--
+
+```javascript
+/**
+ * A magic method that multiples digits.
+ *
+ * @deprecated [#1] since version 2.3 [#2].
+ * [#3] Will be deleted in version 3.0.
+ 
+ * [#4] In case you need similar behavior, implement it on you own,
+ * preferably in vanilla JavaScript
+ * or use the multiplyTheSameNumber method instead,
+ * if the same number needs to be multiplied multiple times, like so:
+ * multiplyDigits([5, 5, 5]) === multiplyTheSameNumber(5, 3)
+ *
+ * @param {array} _digits - digits to multiply
+ */
+function multiplyDigits(_digits) {
+  console.warn("Calling a depricated method!"); // [#5]
+  
+  // ....
+}
+```
+
+-- 
+
+```javascript
+/**
+ * Creating a deprecated / obsolete behavior for methods in a library.
+ * [Credits]{@link: https://stackoverflow.com/q/21726472/1333836}
+ * 
+ * @param  {function} replacementFunction
+ * @param  {string} oldFnName
+ * @param  {string} newFnName
+ * @return {function}
+ */
+const Oboslete = function(replacementFunction, oldFnName, newFnName) {
+    const wrapper = function() {
+       console.warn("WARNING! Obsolete function called. Function '" + oldFnName + "' has been deprecated, please use the new '" + newFnName + "' function instead!");
+
+        replacementFunction.apply(this, arguments);
+    }
+    wrapper.prototype = replacementFunction.prototype;
+
+    return wrapper;
+}
+```
+
+---
+
+## Pourquoi ne pas utiliser un monorepo
+
+![J'ai pas envie](/assets/pas-envie.gif) 
+
+--
+
+- Beaucoup de bruit dans les PR
+- Culture de développement à mettre en place
+- Pas adapté aux trop grosses organisations
+- Énorme tentation du couplage fort
+
+---
+
+## Un entre-deux : plusieurs monorepos
+
+-- 
+
+- Allier les avantages
+- Réduire les inconvénients
+
+--
+
+## Découpages possibles
+
+- Par domaine métier
+- Par technologie
 
 ---
 
 # Conclusion
 
-Le Monorepo avec TurboRepo est la solution idéale pour harmoniser nos projets frontend, simplifier la gestion des dépendances et des versions, et améliorer notre productivité. En adoptant cette approche, nous réduisons les erreurs, facilitons la collaboration et accélérons nos processus de développement.
+À retenir :
 
-N'attendons plus, faisons le choix du Monorepo avec TurboRepo et prenons notre développement frontend vers de nouveaux sommets !
-
-
----
-
-# Sources
-
-- https://monorepo.tools/
+- Unifier la technique
+- Régler les problèmes de librairies internes
+- Pas une solution miracle
