@@ -61,7 +61,7 @@ Note: Et comme si cela ne suffisait pas, nous sommes souvent perdus dans les ver
 
 -- 
 
-![les problèmes](/assets/problemes.jpg)
+![les problèmes](assets/problemes.jpg)
 
 Note: En résumé, en tant que développeurs frontend, nous sommes confrontés à des défis de gestion des ressources au sein de notre entreprise. Le copier-coller fastidieux de code, l'enfer des dépendances et les versions inconsistences entravent notre productivité et augmentent les risques d'erreurs.
 
@@ -71,7 +71,7 @@ Note: En résumé, en tant que développeurs frontend, nous sommes confrontés �
 
 --
 
-![Schéma présentant l'architecture de plusieurs repositories avec des dépendances](/assets/polyrepo-practice.svg) <!-- .element: width="80%" -->
+![Schéma présentant l'architecture de plusieurs repositories avec des dépendances](assets/polyrepo-practice.svg) <!-- .element: width="80%" -->
 
 --
 
@@ -101,11 +101,11 @@ Note: En résumé, en tant que développeurs frontend, nous sommes confrontés �
 
 --
 
-![polyrepo](/assets/polyrepo.png) <!-- .element: width="100%" -->
+![polyrepo](assets/polyrepo.png) <!-- .element: width="100%" -->
 
 -- 
 
-![monorepo](/assets/monorepo.png) <!-- .element: width="100%" -->
+![monorepo](assets/monorepo.png) <!-- .element: width="100%" -->
 
 --
 
@@ -113,7 +113,7 @@ Note: En résumé, en tant que développeurs frontend, nous sommes confrontés �
 
 -- 
 
-![monolith - modular](/assets/monolith-modular.svg) <!-- .element: width="100%" -->
+![monolith - modular](assets/monolith-modular.svg) <!-- .element: width="100%" -->
 
 
 ---
@@ -127,7 +127,7 @@ Note: En résumé, en tant que développeurs frontend, nous sommes confrontés �
 - Tout est testé en même temps
 - Fini les breaking changes qui cassent tout
 
-![Changements atomiques](/assets/atomic-change.gif) <!-- .element: width="40%" -->
+![Changements atomiques](assets/atomic-change.gif) <!-- .element: width="40%" -->
 
 --
 
@@ -136,7 +136,7 @@ Note: En résumé, en tant que développeurs frontend, nous sommes confrontés �
 - Pas d'incompatibilités internes
 - Une image de votre code à un instant T
 
-![Snapshot](/assets/snapshot.gif) <!-- .element: width="40%" -->
+![Snapshot](assets/snapshot.gif) <!-- .element: width="40%" -->
 --
 
 ### Un nouveau projet ? Trop facile !
@@ -144,7 +144,7 @@ Note: En résumé, en tant que développeurs frontend, nous sommes confrontés �
 - Pas de configuration à faire
 - CI/CD déjà en place
 
-![Done](/assets/done.gif) <!-- .element: width="40%" -->
+![Done](assets/done.gif) <!-- .element: width="40%" -->
 --
 
 ### Une collaboration facilitée
@@ -153,7 +153,7 @@ Note: En résumé, en tant que développeurs frontend, nous sommes confrontés �
 - Partage de code facilité
 - Plus de repo caché à trouver
 
-![Handshake](/assets/handshake.gif) <!-- .element: width="40%" -->
+![Handshake](assets/handshake.gif) <!-- .element: width="40%" -->
 
 ---
 
@@ -163,7 +163,7 @@ Le problème dans tout ça ?
 
 --
 
-![Délais importants de build](/assets/local-caching.webp) <!-- .element: width="100%" -->
+![Délais importants de build](assets/local-caching.webp) <!-- .element: width="100%" -->
 
 --
 
@@ -173,7 +173,7 @@ yarn workspaces run test
 yarn workspaces run build
 ````
 
-![Tâches exécutées de manière séquentielles](/assets/tasks-queue.webp) <!-- .element: width="100%" -->
+![Tâches exécutées de manière séquentielles](assets/tasks-queue.webp) <!-- .element: width="100%" -->
 
 ---
 
@@ -181,7 +181,7 @@ yarn workspaces run build
 
 Exemple avec <!-- .element: class="fragment" -->
 
-![Logo Turborepo](/assets/turborepo.png) <!-- .element: width="40%" class="fragment" -->
+![Logo Turborepo](assets/turborepo.png) <!-- .element: width="40%" class="fragment" -->
 
 --
 
@@ -191,17 +191,17 @@ Exemple avec <!-- .element: class="fragment" -->
 - Pipelines de tâches
 - Génération de packages
 
-![Ça fait beaucoup de features](/assets/features.gif) 
+![Ça fait beaucoup de features](assets/features.gif) 
 
 -- 
 
-![Délais importants de build](/assets/local-caching.webp) <!-- .element: width="80%" -->
+![Délais importants de build](assets/local-caching.webp) <!-- .element: width="80%" -->
 
-![Build avec cache](/assets/why-turborepo-solution.webp) <!-- .element: width="80%" -->
+![Build avec cache](assets/why-turborepo-solution.webp) <!-- .element: width="80%" -->
 
 --
 
-![Exécution parallèle](/assets/turborepo-parallel.webp)
+![Exécution parallèle](assets/turborepo-parallel.webp)
 
 --
 
@@ -308,7 +308,7 @@ Note: On peut voir ici que les scripts sont très simples. Turbo s'occupe de tou
 
 -- 
 
-![It's not a bug, it's a feature](/assets/bug-feature.jpg)
+![It's not a bug, it's a feature](assets/bug-feature.jpg)
 
 Note: Le fait de devoir gérer tous les breaking changes en même temps peut être un frein à l'adoption de cette solution, cependant 
 
@@ -372,7 +372,7 @@ const Oboslete = function(replacementFunction, oldFnName, newFnName) {
 
 ## Pourquoi ne pas utiliser un monorepo
 
-![J'ai pas envie](/assets/pas-envie.gif) 
+![J'ai pas envie](assets/pas-envie.gif) 
 
 --
 
