@@ -1,9 +1,6 @@
 
-## Turborepo 
-#### Mettez le turbo dans votre monorepo
-
-![turbo](/assets/turbo.png) <!-- .element: width="200" -->
-
+## Monorepo 
+#### Un seul repo pour les gouverner tous 
 
 ---
 
@@ -409,3 +406,11 @@ const Oboslete = function(replacementFunction, oldFnName, newFnName) {
 - Unifier la technique
 - Régler les problèmes de librairies internes
 - Pas une solution miracle
+
+---
+
+## Sources
+
+- https://monorepo.tools/
+- https://opensource.google/documentation/reference/thirdparty/oneversion
+- https://turbo.build/repo
