@@ -1,18 +1,7 @@
-# Présentation sur le code assisté par intelligence artificielle
+# Présentation des mono-repositories et de leur utilisation
 
 Auteur: Maximilien Gilet
 
-## L'intelligence articielle pour le code, menace ou opportunité?
+## Les mono-repositories, partageons tout !
 
-Avec l'essor de l'intelligence artificielle, il est de plus en plus courant de voir des algorithmes générer du code. Cela peut être vu comme une menace pour les développeurs, mais aussi une opportunité pour les entreprises. Dans cette présentation nous allons voir les différents usages actuels pour simplifier la vie des développeurs et décupler leur productivité.
-
-## Introduction
-
-Ce projet a pour but de présenter le code assisté par intelligence artificielle. Il est composé de plusieurs parties:
-
-- Une présentation de ChatGPT pour la génération de code
-- Un exemple de génération de code avec ChatGPT
-- Les autres usages de ChatGPT pour le code
-- Une démonstration live de GitHub Copilot
-- Une démonstration live des fonctionnalités beta de GitHub Copilot Labs
-- Une présentation rapide de AI Commits
+Des problèmes de dépendances internes ? De partage de code ? Où est le repository qui gère ça ? Et si on réglait tout ça en mettant tous nos projets dans un même repository ? Explorons ensemble les avantages et inconvénients des monorepos, les différentes façons de les découper et comment implémenter cette organisation dans vos projets existants.
